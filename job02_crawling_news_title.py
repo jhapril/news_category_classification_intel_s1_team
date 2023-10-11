@@ -29,7 +29,7 @@ category = ['Politics', 'Economic', 'Social', 'Culture', 'World', 'IT']
 pages = [110, 110, 110, 75, 110, 72]
 df_titles = pd.DataFrame()
 for l in range(6):
-    section_url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=10{}'.format(l)
+    section_url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=10{}'.format(l) #뉴스 카테고리 별로 볼 수 있음
     titles = []
     for k in range(1, 3):
         url = section_url + '#&date=%2000:00:00&page={}'.format(k)
