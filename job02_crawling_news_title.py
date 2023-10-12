@@ -28,10 +28,10 @@ driver = webdriver.Chrome(service=service, options=options)
 category = ['Politics', 'Economic', 'Social', 'Culture', 'World', 'IT']
 pages = [110, 110, 110, 75, 110, 72]
 df_titles = pd.DataFrame()
-for l in range(5,6):
+for l in range(1, 2):      # category
     section_url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=10{}'.format(l) #뉴스 카테고리 별로 볼 수 있음
     titles = []
-    for k in range(1, pages[l]+1):
+    for k in range(1, 50):      # 페이지. pages[l]+1
         url = section_url + '#&date=%2000:00:00&page={}'.format(k)
         driver.get(url)
         time.sleep(0.5)
@@ -43,18 +43,21 @@ for l in range(5,6):
                     titles.append(title)
                 except:
                     print('error {} {} {} {}'.format(l, k, i, j))
-        if k % 10 == 0: #10페이지마다 한번씩 저장
+
+        if k % 10 == 0:
             df_section_title = pd.DataFrame(titles, columns=['titles'])
             df_section_title['category'] = category[l]
-            df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)
-            df_titles.to_csv('./crawling_data/crawling_data_{}_{}.csv'.format(l, k), index=False) #l (정치)섹션 k 몇페이지
+            # df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)
+            df_titles.to_csv('./crawling_data/crawling_data_{}_{}.csv'.format(l, k), index=False)
             titles = []
 
     df_section_title = pd.DataFrame(titles, columns=['titles'])
     df_section_title['category'] = category[l]
-    df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)
-    df_titles.to_csv('./crawling_data/crawling_data_IT.csv',index=False)
+    # df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)
+    df_titles.to_csv('./crawling_data/crawling_data_last.csv',index=False)
 
-print(df_titles.head())
-df_titles.info()
-print(df_titles['category'].value_counts())
+# print(df_titles.head())
+# df_titles.info()
+# print(df_titles['category'].value_counts())
+
+driver.close()
